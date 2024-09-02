@@ -1,9 +1,8 @@
-The Bank ATM System
+# The Bank ATM System
 
 
 
-
-
+# Overview
 
 This script is a simple ATM system for Haroon's Bank that allows users to check their balance, withdraw and deposit funds, change their PIN, and exit the application. The system uses a command-line interface and readline-sync for user input.
 
@@ -11,13 +10,18 @@ This script is a simple ATM system for Haroon's Bank that allows users to check 
 
 
 
-Features
+# Features
 Check Balance: View current balance, total deposits, and total withdrawals.
 Withdraw Funds: Withdraw an amount from the balance, ensuring sufficient funds are available.
 Deposit Funds: Deposit an amount into the account.
 Change PIN: Change the account's PIN.
 Exit: Exit the application.
-Requirements
+
+
+
+
+# Requirements
+
 Node.js installed on your system.
 readline-sync package (install via npm install readline-sync).
 Setup
