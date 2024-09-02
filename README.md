@@ -4,7 +4,7 @@
 
 # Overview
 
-This script is a simple ATM system for Haroon's Bank that allows users to check their balance, withdraw and deposit funds, change their PIN, and exit the application. The system uses a command-line interface and readline-sync for user input.
+This script is a simple ATM system for a Bank that allows users to check their balance, withdraw and deposit funds, change their PIN, and exit the application. The system uses a command-line interface and readline-sync for user input.
 
 
 
