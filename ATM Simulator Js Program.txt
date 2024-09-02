@@ -1,0 +1,179 @@
+const readlineSync = require('readline-sync');
+
+let pin = '54321';
+let pinTries = 3;
+let balance = 5000;
+let totalDeposits = 0;
+let totalWithdrawals = 0;
+
+function displayWelcomeMessage() {
+    console.log(`
+**************************************************
+*           Welcome to Haroons Bank              *
+**************************************************
+`);
+}
+
+function displayMenu() {
+    console.log(`
+**************************************************
+*               Main Menu                        *
+**************************************************
+* 1: Check Balance                               *
+* 2: Withdraw Funds                              *
+* 3: Deposit Funds                               *
+* 4: Change PIN                                  *
+* 5: Exit                                        *
+**************************************************
+`);
+}
+
+function promptForChoice() {
+    return readlineSync.question("What can I do to help you today? ");
+}
+
+function validatePin() {
+    let pinEntered = readlineSync.question("Please enter your PIN: ");
+    if (pinEntered === pin) {
+        console.log("PIN accepted.");
+        return true;
+    } else {
+        pinTries--;
+        if (pinTries === 0) {
+            console.log("You have been locked out of your account due to multiple incorrect PIN entries.");
+            process.exit();
+        } else {
+            console.log(`Incorrect PIN. You have ${pinTries} tries left.`);
+            return false;
+        }
+    }
+}
+
+function checkBalance() {
+    if (validatePin()) {
+        console.log(`
+**************************************************
+*                 Balance                        *
+**************************************************
+* Total Deposits: £${totalDeposits}                
+* Total Withdrawals: £${totalWithdrawals}            
+* Current Balance: £${balance}                     
+**************************************************
+`);
+        // Ask the user if they want to use any other services
+        let continueChoice = readlineSync.question("Would you like to use any other services? (yes/no): ").toLowerCase();
+        if (continueChoice === "yes" || continueChoice === "y") {
+            return; // Go back to the main menu
+        } else {
+            console.log("Thank you for using Haroons Bank!");
+            process.exit(); // Exit the program
+        }
+    }
+}
+
+function withdrawFunds() {
+    if (validatePin()) {
+        console.log(`Your current balance is £${balance}`);
+        let withdrawAmount = parseFloat(readlineSync.question("Enter the amount you would like to withdraw: "));
+        if (withdrawAmount > 0 && withdrawAmount <= balance) {
+            balance -= withdrawAmount;
+            totalWithdrawals += withdrawAmount;
+            console.log(`
+**************************************************
+* You have successfully withdrawn £${withdrawAmount}. *
+* Your new balance is £${balance}.                   *
+**************************************************
+`);
+        } else {
+            console.log("Insufficient funds or invalid amount entered.");
+        }
+
+        // Ask the user if they want to use any other services
+        let continueChoice = readlineSync.question("Would you like to use any other services? (yes/no): ").toLowerCase();
+        if (continueChoice === "yes" || continueChoice === "y") {
+            return; // Go back to the main menu
+        } else {
+            console.log("Thank you for using Haroons Bank!");
+            process.exit(); // Exit the program
+        }
+    }
+}
+
+function depositFunds() {
+    if (validatePin()) {
+        let depositAmount = parseFloat(readlineSync.question("Enter the amount you would like to deposit: "));
+        if (depositAmount > 0) {
+            balance += depositAmount;
+            totalDeposits += depositAmount;
+            console.log(`
+**************************************************
+* You have successfully deposited £${depositAmount}. *
+* Your new balance is £${balance}.                   *
+**************************************************
+`);
+        } else {
+            console.log("Invalid amount entered.");
+        }
+
+        // Ask the user if they want to use any other services
+        let continueChoice = readlineSync.question("Would you like to use any other services? (yes/no): ").toLowerCase();
+        if (continueChoice === "yes" || continueChoice === "y") {
+            return; // Go back to the main menu
+        } else {
+            console.log("Thank you for using Haroons Bank!");
+            process.exit(); // Exit the program
+        }
+    }
+}
+
+function changePin() {
+    if (validatePin()) {
+        let newPin = readlineSync.question("Enter your new PIN: ");
+        pin = newPin;
+        console.log(`
+**************************************************
+* Your PIN has been successfully changed.        *
+**************************************************
+`);
+
+        // Ask the user if they want to use any other services
+        let continueChoice = readlineSync.question("Would you like to use any other services? (yes/no): ").toLowerCase();
+        if (continueChoice === "yes" || continueChoice === "y") {
+            return; // Go back to the main menu
+        } else {
+            console.log("Thank you for using Haroons Bank!");
+            process.exit(); // Exit the program
+        }
+    }
+}
+
+function main() {
+    displayWelcomeMessage();
+    while (true) {
+        displayMenu();
+        let choice = promptForChoice();
+        switch (choice) {
+            case '1':
+                checkBalance();
+                break;
+            case '2':
+                withdrawFunds();
+                break;
+            case '3':
+                depositFunds();
+                break;
+            case '4':
+                changePin();
+                break;
+            case '5':
+                console.log("Thank you for using Haroons Bank!");
+                return;
+            default:
+                console.log("Invalid choice. Please select a valid option.");
+                break;
+        }
+    }
+}
+
+// Run the main function to start the application
+main();
